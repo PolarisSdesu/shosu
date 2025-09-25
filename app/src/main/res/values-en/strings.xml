@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Execution</string>
+    <string name="tip_from_ema">Tip from Ema: \nDouble-tap the button to reset its state</string>
+</resources>
