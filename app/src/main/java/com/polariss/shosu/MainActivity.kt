@@ -25,7 +25,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -71,7 +70,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App() {
@@ -91,15 +89,13 @@ fun App() {
         }
     }
 
-    // State 控制 bottom sheet 显示
     var showBottomSheet by remember { mutableStateOf(false) }
-
-    // About 图标透明度动画
     val aboutAlphaAnim = remember { androidx.compose.animation.core.Animatable(1f) }
     val coroutineScope = rememberCoroutineScope()
+    val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+    val versionName = packageInfo.versionName
 
     ShosuTheme {
-        // Bottom Sheet
         if (showBottomSheet) {
             ModalBottomSheet(
                 onDismissRequest = { showBottomSheet = false },
@@ -124,13 +120,6 @@ fun App() {
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    Text(
-                        text = "処刑",
-                        style = MaterialTheme.typography.titleLarge,
-                        fontFamily = FontFamily.SansSerif,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
                     Box(modifier = Modifier.fillMaxWidth()) {
                         Image(
                             painter = painterResource(id = R.drawable.logo),
@@ -142,13 +131,25 @@ fun App() {
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
+                        text = context.getText(R.string.about_title).toString(),
+                        fontSize = 10.sp,
+                        fontFamily = FontFamily.SansSerif,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
+                    Text(
                         fontSize = 8.sp,
                         lineHeight = 12.sp,
                         text = buildAnnotatedString {
-                            append("本应用程序是由 Re,AER 旗下品牌 Acacia 制作的推理文字冒险游戏《魔法少女的魔女审判》（魔法少女ノ魔女裁判）的二创作品。\n\n")
-                            append("本アプリは、Re,AER傘下のブランドAcaciaによって制作された推理文字アドベンチャーゲーム「魔法少女ノ魔女裁判」の二次創作作品です。\n\n")
-                            append("Version: 1.1\n")
-                            append("Made by GBXIN\n")
+                            append(context.getText(R.string.about_description_zh))
+                            append("\n\n")
+                            append(context.getText(R.string.about_description_ja))
+                            append("\n\n")
+                            append(context.getText(R.string.app_name))
+                            append("\n")
+                            append("${context.getText(R.string.version_label)} $versionName\n")
+                            append(context.getText(R.string.developer_info))
+                            append("\n")
 
                             withLink(
                                 LinkAnnotation.Url(
@@ -162,7 +163,7 @@ fun App() {
                                         textDecoration = TextDecoration.Underline
                                     )
                                 ) {
-                                    append("X (旧 Twitter)")
+                                    append(context.getText(R.string.x_label))
                                 }
                             }
                             append("｜")
@@ -178,7 +179,7 @@ fun App() {
                                         textDecoration = TextDecoration.Underline
                                     )
                                 ) {
-                                    append("bilibili")
+                                    append(context.getText(R.string.bilibili_label))
                                 }
                             }
                         }
@@ -188,7 +189,6 @@ fun App() {
         }
 
         Box(modifier = Modifier.fillMaxSize()) {
-            // 背景图片
             Image(
                 painter = painterResource(id = R.drawable.background),
                 contentDescription = null,
@@ -198,17 +198,15 @@ fun App() {
 
             Icon(
                 imageVector = Icons.Default.Info,
-                tint = Color(0x9A581F28).copy(alpha = aboutAlphaAnim.value),
-                contentDescription = "About",
+                tint = Color(0xFF252525).copy(alpha = aboutAlphaAnim.value),
+                contentDescription = context.getText(R.string.about_title).toString(),
                 modifier = Modifier
                     .padding(20.dp, 48.dp)
-                    .clip(CircleShape) // 圆形裁剪
+                    .clip(CircleShape)
                     .clickable { showBottomSheet = true }
                     .align(Alignment.TopStart),
             )
 
-
-            // 居中按钮
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -237,7 +235,6 @@ fun App() {
         }
     }
 }
-
 
 fun shouldShowTip(context: Context): Boolean {
     val prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)

@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">処刑</string>
     <string name="tip_from_ema">エマからのヒント：\nボタンをダブルタップすると状態をリセットできます</string>
+    <string name="about_title" translatable="false">About</string>
+    <string name="version_label" translatable="false">Version:</string>
+    <string name="about_description_ja" translatable="false">本アプリは、Re,AER 傘下のブランド Acacia によって制作された推理文字アドベンチャーゲーム「魔法少女ノ魔女裁判」の二次創作作品です。</string>
+    <string name="about_description_zh" translatable="false">本应用程序是由 Re,AER 旗下品牌 Acacia 制作的推理文字冒险游戏《魔法少女的魔女审判》（魔法少女ノ魔女裁判）的二创作品。</string>
+    <string name="developer_info" translatable="false">Software Developed by GBXIN</string>
+    <string name="x_label" translatable="false">X (旧 Twitter)</string>
+    <string name="bilibili_label" translatable="false">bilibili</string>
 </resources>
